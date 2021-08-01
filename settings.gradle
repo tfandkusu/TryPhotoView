@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TryPhotoView"
 include ':app'
+include ':photoview'
