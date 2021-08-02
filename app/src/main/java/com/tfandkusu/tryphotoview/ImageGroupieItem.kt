@@ -1,15 +1,16 @@
 package com.tfandkusu.tryphotoview
 
-import android.net.Uri
 import android.view.View
-import com.squareup.picasso.Picasso
+import coil.load
 import com.tfandkusu.tryphotoview.databinding.ListItemImageBinding
 import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 
 class ImageGroupieItem(private val imageUrl: String) : BindableItem<ListItemImageBinding>() {
     override fun bind(viewBinding: ListItemImageBinding, position: Int) {
-        Picasso.get().load(Uri.parse(imageUrl)).into(viewBinding.photoView)
+        viewBinding.photoView.load(imageUrl) {
+            crossfade(true)
+        }
     }
 
     override fun getLayout() = R.layout.list_item_image
