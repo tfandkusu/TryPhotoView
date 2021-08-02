@@ -13,10 +13,10 @@ class MainActivity : AppCompatActivity() {
          * 画像はいらすとやさんより。
          */
         private val IMAGE_URLS = listOf(
-            "https://1.bp.blogspot.com/-LDQjratJYoM/YHDkNRgd1XI/AAAAAAABdl8/h5yxEkLKmBcXC6-GXJsoOIzJsCDWd5sMACNcBGAsYHQ/s845/landmark_tausyubetsu_bridge.png",
-            "https://1.bp.blogspot.com/-tN6cxEx1kvM/X7zMFOAnmQI/AAAAAAABcX4/4UjrbGfFHIE59wHINvkF03bzXmL3FzMSACNcBGAsYHQ/s1920/bg_lavender_flower.jpg",
-            "https://1.bp.blogspot.com/-0XUYPcO40n8/X5OcHdsaQTI/AAAAAAABb5M/9FW4NZlp5oklDgUSqAa9i3cekGp8PjGQACNcBGAsYHQ/s1920/bg_natural_river.jpg",
-            "https://1.bp.blogspot.com/-YnNw0nmy5WY/X5OcdKUoDhI/AAAAAAABb-w/Ws-6a4R4Io4IAWwuxtx8ilCxY9RgmKGHgCNcBGAsYHQ/s1005/nature_ocean_kaisou.png"
+            "https://2.bp.blogspot.com/-4SSFZUa0ab4/Vg57ivCMfhI/AAAAAAAAyzQ/Pm4eBFxAaOc/s800/sweets_fruit_pafe.png",
+            "https://1.bp.blogspot.com/-F1EaVL5t2zM/XZR9ftwga3I/AAAAAAABVTY/t174NxuHwvghxBTg4Q31qNVon6FKuSBywCNcBGAsYHQ/s1600/landmark_hokkaidou_kyuuhonchousya.png",
+            "https://2.bp.blogspot.com/-PtiUwbxAtNc/U5hUb0EU7UI/AAAAAAAAhJY/V0XJK0hKoEk/s800/food_jingisukan_genghis_khan.png",
+            "https://4.bp.blogspot.com/-dN9u5FvIFg4/UrEgH7TCr_I/AAAAAAAAb4I/Z_mQivZxrjI/s800/suizokukan_jinbeizame.png"
         )
     }
 
