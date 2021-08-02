@@ -29,5 +29,6 @@ class MainActivity : AppCompatActivity() {
         adapter.update(IMAGE_URLS.map {
             ImageGroupieItem(it)
         })
+        binding.viewPager.offscreenPageLimit = 3
     }
 }
