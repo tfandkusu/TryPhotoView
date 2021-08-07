@@ -29,7 +29,7 @@ class MainGroupieItem(
     override fun isSameAs(other: Item<*>): Boolean {
         return if (other is MainGroupieItem) {
             index == other.index &&
-                    imageUrl == other.imageUrl
+                imageUrl == other.imageUrl
         } else {
             false
         }
@@ -38,7 +38,7 @@ class MainGroupieItem(
     override fun hasSameContentAs(other: Item<*>): Boolean {
         return if (other is MainGroupieItem) {
             index == other.index &&
-                    imageUrl == other.imageUrl
+                imageUrl == other.imageUrl
         } else {
             false
         }

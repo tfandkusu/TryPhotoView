@@ -21,9 +21,11 @@ class ImageActivity : AppCompatActivity() {
         val index = intent.getIntExtra(EXTRA_INDEX, 0)
         val adapter = GroupieAdapter()
         binding.viewPager.adapter = adapter
-        adapter.update(imageUrls.map {
-            ImageGroupieItem(it)
-        })
+        adapter.update(
+            imageUrls.map {
+                ImageGroupieItem(it)
+            }
+        )
         binding.viewPager.offscreenPageLimit = 3
         binding.viewPager.setCurrentItem(index, false)
     }
