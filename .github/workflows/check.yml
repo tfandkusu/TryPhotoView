@@ -1,0 +1,35 @@
+# 単体テスト実行、フォーマットチェックを行うワークフロー
+
+# ワークフローの名前
+name: check
+# ワークフロー実行タイミングは
+on:
+  # mainブランチへのPUSH
+  push:
+    branches:
+      - main
+  # プルリクの作成と更新
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+jobs:
+  check: # job名
+    # ubuntuで動かす
+    runs-on: ubuntu-latest
+    steps:
+      # mainブランチをチェックアウトする
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      # 該当ブランチをチェックアウトする
+      - uses: actions/checkout@v2
+      # java11をセットアップする
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      # フォーマットチェック
+      - run: ./gradlew spotlessKotlinCheck
+      # 単体テスト実行
+      - run: ./gradlew testDebug
