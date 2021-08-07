@@ -1,11 +1,14 @@
 package com.tfandkusu.tryphotoview
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import com.tfandkusu.tryphotoview.databinding.ActivityMainBinding
 import com.xwray.groupie.GroupieAdapter
 
 class MainActivity : AppCompatActivity() {
+
 
     companion object {
         /**
@@ -20,15 +23,27 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerView.addItemDecoration(MainItemDecoration())
         val adapter = GroupieAdapter()
-        binding.viewPager.adapter = adapter
-        adapter.update(IMAGE_URLS.map {
-            ImageGroupieItem(it)
+        binding.recyclerView.adapter = adapter
+        adapter.update(IMAGE_URLS.mapIndexed { index, imageUrl ->
+            MainGroupieItem(index, imageUrl) {
+                callImageActivity(it)
+            }
         })
-        binding.viewPager.offscreenPageLimit = 3
+    }
+
+    private fun callImageActivity(index: Int) {
+        val intent = Intent(this, ImageActivity::class.java)
+        intent.putStringArrayListExtra(ImageActivity.EXTRA_IMAGE_URLS, ArrayList(IMAGE_URLS))
+        intent.putExtra(ImageActivity.EXTRA_INDEX, index)
+        startActivity(intent)
     }
 }
