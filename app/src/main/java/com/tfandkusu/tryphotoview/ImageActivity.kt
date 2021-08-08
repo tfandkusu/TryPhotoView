@@ -2,6 +2,7 @@ package com.tfandkusu.tryphotoview
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.tfandkusu.tryphotoview.databinding.ActivityImageBinding
 import com.xwray.groupie.GroupieAdapter
@@ -16,6 +17,16 @@ class ImageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.apply {
+            decorView.systemUiVisibility =
+                // コンテンツをステータスバーの背後に表示する
+                // https://developer.android.com/training/system-ui/status#behind
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                // コンテンツをナビゲーション バーの背後に表示する
+                // https://developer.android.com/training/system-ui/navigation#behind
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        }
+
         val binding = ActivityImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
