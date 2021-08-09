@@ -37,7 +37,7 @@ class ImageActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val imageUrls = intent.getStringArrayListExtra(EXTRA_IMAGE_URLS) ?: listOf<String>()
-        val index = intent.getIntExtra(EXTRA_INDEX, 0)
+        val initialIndex = intent.getIntExtra(EXTRA_INDEX, 0)
         val adapter = GroupieAdapter()
         binding.viewPager.adapter = adapter
         adapter.update(
@@ -46,7 +46,7 @@ class ImageActivity : AppCompatActivity() {
             }
         )
         binding.viewPager.offscreenPageLimit = 3
-        binding.viewPager.setCurrentItem(index, false)
+        binding.viewPager.setCurrentItem(initialIndex, false)
 
         window.sharedElementEnterTransition.addListener(object : Transition.TransitionListener {
 
@@ -54,15 +54,19 @@ class ImageActivity : AppCompatActivity() {
 
             override fun onTransitionStart(p0: Transition?) {
                 binding.viewPager.isVisible = false
-                binding.transitionImageView.load(imageUrls[index])
+                if (open) {
+                    binding.transitionImageView.load(imageUrls[initialIndex])
+                }
+                val index = binding.viewPager.currentItem
+                if (initialIndex == index) {
+                    binding.transitionImageView.alpha = 1.0f
+                }
             }
 
             override fun onTransitionEnd(p0: Transition?) {
                 if (open) {
                     binding.viewPager.isVisible = true
-                    binding.root.post {
-                        binding.transitionImageView.isVisible = false
-                    }
+                    binding.transitionImageView.alpha = 0.0f
                 }
                 open = false
             }
@@ -80,7 +84,7 @@ class ImageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == android.R.id.home) {
-            finish()
+            finishAfterTransition()
             true
         } else {
             super.onOptionsItemSelected(item)

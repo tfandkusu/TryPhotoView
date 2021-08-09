@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         val adapter = GroupieAdapter()
         binding.recyclerView.adapter = adapter
         adapter.update(
-            IMAGE_URLS.mapIndexed { index, imageUrl ->
-                MainGroupieItem(index, imageUrl) { index, transitionView ->
+            IMAGE_URLS.mapIndexed { itemIndex, imageUrl ->
+                MainGroupieItem(itemIndex, imageUrl) { index, transitionView ->
                     callImageActivity(index, transitionView)
                 }
             }
