@@ -1,9 +1,12 @@
 package com.tfandkusu.tryphotoview
 
 import android.os.Bundle
+import android.transition.Transition
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import coil.load
 import com.tfandkusu.tryphotoview.databinding.ActivityImageBinding
 import com.xwray.groupie.GroupieAdapter
 
@@ -14,6 +17,8 @@ class ImageActivity : AppCompatActivity() {
 
         const val EXTRA_INDEX = "index"
     }
+
+    private lateinit var binding: ActivityImageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +32,7 @@ class ImageActivity : AppCompatActivity() {
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
 
-        val binding = ActivityImageBinding.inflate(layoutInflater)
+        binding = ActivityImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -42,6 +47,35 @@ class ImageActivity : AppCompatActivity() {
         )
         binding.viewPager.offscreenPageLimit = 3
         binding.viewPager.setCurrentItem(index, false)
+
+        window.sharedElementEnterTransition.addListener(object : Transition.TransitionListener {
+
+            private var open: Boolean = true
+
+            override fun onTransitionStart(p0: Transition?) {
+                binding.viewPager.isVisible = false
+                binding.transitionImageView.load(imageUrls[index])
+            }
+
+            override fun onTransitionEnd(p0: Transition?) {
+                if (open) {
+                    binding.viewPager.isVisible = true
+                    binding.root.post {
+                        binding.transitionImageView.isVisible = false
+                    }
+                }
+                open = false
+            }
+
+            override fun onTransitionCancel(p0: Transition?) {
+            }
+
+            override fun onTransitionPause(p0: Transition?) {
+            }
+
+            override fun onTransitionResume(p0: Transition?) {
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

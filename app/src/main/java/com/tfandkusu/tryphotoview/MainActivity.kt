@@ -1,7 +1,9 @@
 package com.tfandkusu.tryphotoview
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tfandkusu.tryphotoview.databinding.ActivityMainBinding
@@ -39,17 +41,19 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         adapter.update(
             IMAGE_URLS.mapIndexed { index, imageUrl ->
-                MainGroupieItem(index, imageUrl) {
-                    callImageActivity(it)
+                MainGroupieItem(index, imageUrl) { index, transitionView ->
+                    callImageActivity(index, transitionView)
                 }
             }
         )
     }
 
-    private fun callImageActivity(index: Int) {
+    private fun callImageActivity(index: Int, transitionView: View) {
         val intent = Intent(this, ImageActivity::class.java)
         intent.putStringArrayListExtra(ImageActivity.EXTRA_IMAGE_URLS, ArrayList(IMAGE_URLS))
         intent.putExtra(ImageActivity.EXTRA_INDEX, index)
-        startActivity(intent)
+        val options = ActivityOptions
+            .makeSceneTransitionAnimation(this, transitionView, "image")
+        startActivity(intent, options.toBundle())
     }
 }
