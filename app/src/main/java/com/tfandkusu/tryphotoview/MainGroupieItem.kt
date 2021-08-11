@@ -9,7 +9,7 @@ import com.xwray.groupie.viewbinding.BindableItem
 class MainGroupieItem(
     private val index: Int,
     private val imageUrl: String,
-    private val onClick: (index: Int) -> Unit
+    private val onClick: (index: Int, transitionView: View) -> Unit
 ) :
     BindableItem<ListItemMainBinding>() {
     override fun bind(viewBinding: ListItemMainBinding, position: Int) {
@@ -18,7 +18,7 @@ class MainGroupieItem(
         viewBinding.imageView.contentDescription =
             context.getString(R.string.content_description_image, index)
         viewBinding.root.setOnClickListener {
-            onClick(index)
+            onClick(index, viewBinding.imageView)
         }
     }
 
