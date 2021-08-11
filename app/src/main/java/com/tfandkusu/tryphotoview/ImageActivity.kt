@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.transition.Transition
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import coil.load
@@ -19,6 +20,16 @@ class ImageActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityImageBinding
+
+    private val onBackPressed = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            quit()
+        }
+    }
+
+    private val initialIndex by lazy {
+        intent.getIntExtra(EXTRA_INDEX, 0)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +47,8 @@ class ImageActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        onBackPressedDispatcher.addCallback(onBackPressed)
         val imageUrls = intent.getStringArrayListExtra(EXTRA_IMAGE_URLS) ?: listOf<String>()
-        val initialIndex = intent.getIntExtra(EXTRA_INDEX, 0)
         val adapter = GroupieAdapter()
         binding.viewPager.adapter = adapter
         adapter.update(
@@ -84,10 +95,19 @@ class ImageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == android.R.id.home) {
-            finishAfterTransition()
+            quit()
             true
         } else {
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun quit() {
+        if (binding.viewPager.currentItem == initialIndex) {
+            finishAfterTransition()
+        } else {
+            finish()
+            overridePendingTransition(R.anim.cut_in, R.anim.slide_out_right)
         }
     }
 }
